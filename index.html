@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday, Love!</title>
+<style>
+    @keyframes gradient {
+        0% {background-position: 0 0;}
+        50% {background-position: 100% 100%;}
+        100% {background-position: 0 0;}
+    }
+    @keyframes float {
+        0% {transform: translateY(0);}
+        50% {transform: translateY(-15px);}
+        100% {transform: translateY(0);}
+    }
+
+    body {
+        margin:0;
+        height:100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow:hidden;
+        background: linear-gradient(135deg,#ff9a9e,#fad0c4,#fbc2eb,#a6c1ee);
+        background-size: 400% 400%;
+        animation: gradient 20s ease infinite;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .card {
+        background: rgba(255,255,255,0.9);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 2.5rem 3rem;
+        max-width: 420px;
+        text-align:center;
+        box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        transform: scale(0);
+        opacity: 0;
+        transition: transform 0.9s cubic-bezier(0.22,1,0.36,1), opacity 0.9s ease;
+        position: relative;
+    }
+
+    .card.reveal {
+        transform: scale(1);
+        opacity:1;
+    }
+
+    h1 {
+        margin-top:0;
+        font-size:2rem;
+        background: linear-gradient(90deg,#ff758c,#ff7eb3);
+        -webkit-background-clip:text;
+        -webkit-text-fill-color:transparent;
+        animation: float 4s ease-in-out infinite;
+    }
+
+    p {
+        font-size:1.1rem;
+        line-height:1.6;
+        color:#444;
+    }
+
+    .tap-message {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 1.2rem;
+        background: rgba(255,255,255,0.8);
+        padding: 1rem 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        text-align: center;
+        z-index: 2;
+        cursor: pointer;
+        transition: opacity 0.5s ease;
+    }
+
+    .tap-message.hidden {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .heart {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background: #ff6b81;
+        transform: rotate(-45deg);
+        animation: drift 6s infinite cubic-bezier(0.42, 0, 0.58, 1);
+    }
+    .heart::before,
+    .heart::after {
+        content: "";
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background:#ff6b81;
+        border-radius:50%;
+    }
+    .heart::before {
+        top:-10px;
+        left:0;
+    }
+    .heart::after {
+        left:10px;
+        top:0;
+    }
+
+    @keyframes drift {
+        0%   {transform: translateY(0) rotate(-45deg) scale(0.8);}
+        50%  {transform: translateY(-150px) rotate(-45deg) scale(1);}
+        100% {transform: translateY(0) rotate(-45deg) scale(0.8);}
+    }
+</style>
+</head>
+<body>
+    <div class="tap-message" id="tapMsg">Tap to open your birthday surprise 🎁</div>
+    <div class="card" id="card">
+        <h1>Happy Birthday, my love!</h1>
+        <p>
+            Thank you for filling my days with laughter and warmth. I'm so thankful for all the little and big things you've done for me. I'm the luckiest person alive to have you as my one and only partner. May your special day be as wonderful and sweet as you are to me. I love you so much—today, tomorrow, and always.
+        </p>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const card = document.getElementById('card');
+    const tapMsg = document.getElementById('tapMsg');
+
+    // Add floating hearts
+    for(let i=0;i<18;i++){
+        const h=document.createElement('span');
+        h.className='heart';
+        h.style.left=Math.random()*100+'%';
+        h.style.animationDelay=Math.random()*5+'s';
+        h.style.animationDuration=5+Math.random()*5+'s';
+        card.appendChild(h);
+    }
+
+    tapMsg.addEventListener('click', () => {
+        tapMsg.classList.add('hidden');
+        card.classList.add('reveal');
+    });
+});
+</script>
+</body>
+</html>
